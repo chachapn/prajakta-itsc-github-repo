@@ -6,13 +6,17 @@ const { Router } = require(`express`);
 const assessmentRouter = Router();
 
 assessmentRouter.post(
-  `/`,
+  `/submit`,
   async (req, res, next) => {
     try {
       const { assessment } = req.body;
 
       // verify that your data is making it here to the API by using console.log(assessment);
+      global.console.log(assessment);
+
       // call the AssessmentService.submit function from packages/api/src/microservices/Assessment-Service.js and
+      const val = AssessmentService.submit(assessment);
+      global.console.log(val);
       // supply the correct parameters
 
       ResponseHandler(

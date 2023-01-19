@@ -30,7 +30,7 @@ export const NewAssessment = () => {
   // create a form that utilizes the "onSubmit" function to send data to
   // packages/client/src/services/AssessmentService.js and then onto the packages/api/src/routes/assessment express API
   const onSubmit = async (data) => {
-    await AssessmentService.submit(data);
+    // await AssessmentService.submit(data);
     const { question1, question2, question3, question4, question5 } = data;
     const scoreTotal = parseInt(question1) +
   parseInt(question2) +
@@ -38,7 +38,7 @@ export const NewAssessment = () => {
   parseInt(question4) +
   parseInt(question5);
 
-    console.log(scoreTotal);
+    global.console.log(scoreTotal);
     setPoints(scoreTotal);
     data.score = scoreTotal;
     data.riskLevel = riskLevel(scoreTotal);
@@ -66,18 +66,18 @@ export const NewAssessment = () => {
 
   return <Form onSubmit={handleSubmit(onSubmit)}>
 
-    <h2><b>Cat Assessment Info</b></h2>
+    <h2 style={{ color: `blue` }}><b><u>Cat Assessment Info</u></b></h2>
 
     <br />
-    <h3><b>Instrument</b></h3>
+
     <h2>Cat Behavioral Instrument</h2>
-    <h1> User Score: {points} </h1>
+    <h1 align="right" style={{ color: `red` }}> User Score: {points} </h1>
 
     <h4>Cat Details</h4>
     <Form.Group controlId="name">
       <Form.Label>Cat Name</Form.Label>
       <Form.Control
-        type="text"
+        type="text" placeholder="Enter Cat Name"
         className="form-control mb-3"
         {...register(`name`)} />
     </Form.Group>
@@ -87,7 +87,7 @@ export const NewAssessment = () => {
 
       <Form.Control
         type="date"
-        placeholder="Cat Date of Birth"
+        placeholder=" Enter Cat Date of Birth"
         className="form-control mb-3"
         {...register(`date`)} />
     </Form.Group>
@@ -136,7 +136,7 @@ export const NewAssessment = () => {
         <option value={score.v1}>Yes</option>
         <option value={score.v0}>No</option>
       </Form.Select>
-      <Form.Group> <Form.Label>Risk Level: low[0-1], Medium[2-3], high[4-5]</Form.Label>
+      <Form.Group> <Form.Label>Risk Level: low[0-1], Medium[2-3], high[4-5]</Form.Label> <Form.Range />
       </Form.Group>
     </Form.Group>
     <Button variant="primary" type="submit">Submit</Button>
