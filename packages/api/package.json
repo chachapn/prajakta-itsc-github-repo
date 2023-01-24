@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Cat Corrections API",
   "main": "index.js",
+  "secure":false,
   "scripts": {
     "start": "nodemon",
     "build": "tsc",
