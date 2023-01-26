@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { Table } from 'react-bootstrap';
 import { useSortBy, useTable } from 'react-table';
 import { AssessmentService } from '../../services/AssessmentService';
 
@@ -7,10 +8,8 @@ export const AssessmentList = () => {
 
   // fetch all assessments using the AssessmentService.getList function from OCAT/client/services/AssessmentService.js
   useEffect(() => {
-    const fetchAssessments = async () => {
-      setAssessments(await AssessmentService.getList());
-    };
-    fetchAssessments();
+    AssessmentService.getList()
+      .then(a => setAssessments(a));
   }, []);
 
   const columns = useMemo(
@@ -47,7 +46,17 @@ export const AssessmentList = () => {
     ],
     []
   );
-  // const tableInstance = useTable({ columns, data });
+
+  function editUser()
+  {
+
+    global.console.log(`Inside selectUser function`);
+  }
+
+  function deleteUser()
+  {
+    global.console.log(` inside function delete user`);
+  }
 
   const {
     getTableBodyProps,
@@ -58,7 +67,7 @@ export const AssessmentList = () => {
   } = useTable({ columns, data: assessments }, useSortBy);
 
   return (
-    <table align="center" {...getTableProps()} style={{ border: `solid 1px blue` }}>
+    <Table align="center" {...getTableProps()} striped bordered hover>
       <thead>
         {headerGroups.map(headerGroup =>
           <tr align="center" {...headerGroup.getHeaderGroupProps()}>
@@ -92,11 +101,18 @@ export const AssessmentList = () => {
                 >
                   {cell.render(`Cell`)}
                 </td>)}
+              <tr>
+                <td>
+                  <button onClick={editUser} > Update </button>
+                  <button onClick={deleteUser}> Delete </button>
+
+                </td>
+              </tr>
             </tr>
           );
         })}
       </tbody>
-    </table>
+    </Table>
 
   );
 };
